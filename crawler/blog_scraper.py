@@ -88,7 +88,7 @@ def get_latest_post_ranto28():
     except Exception as e:
         print(f"[RSS 파싱] 수집 오류: {e}")
         results.append({
-            'date': datetime.now().strftime("%Y-%m-%d"),
+            'date': (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M"),
             'source': 'Naver(ranto28)',
             'title': '수집 실패',
             'content': str(e),
