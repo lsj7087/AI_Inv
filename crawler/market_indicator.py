@@ -133,10 +133,8 @@ def get_market_data():
         '네이버 (NAVER)': '035420.KS',
         '카카오 (KAKAO)': '035720.KS'
     }
-    
     results = []
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    
+    now_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
     # 1. CNN Fear & Greed
     score, rating = get_fear_and_greed()
     if score is not None:

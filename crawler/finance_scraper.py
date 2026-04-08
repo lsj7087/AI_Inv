@@ -49,7 +49,8 @@ def parse_rss_to_dicts(feed_url, category_name, max_items=20):
     RSS(XML) 피드에서 기사 리스트를 파싱하여 형식화합니다.
     """
     results = []
-    today_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    from datetime import timedelta
+    today_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
     
     try:
         res = requests.get(feed_url, headers=HEADERS, timeout=10)
@@ -92,7 +93,8 @@ def get_financial_juice():
     정적 페이지 버전이 없으므로 야후 파이낸스 속보로 일부 대체하거나 제한적 파싱 시도.
     """
     results = []
-    today_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    from datetime import timedelta
+    today_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
     url = "https://www.financialjuice.com/home"
     
     try:
@@ -131,7 +133,8 @@ def get_financial_juice():
 def get_naver_news(max_items=20):
     url = "https://finance.naver.com/news/mainnews.naver"
     results = []
-    today_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    from datetime import timedelta
+    today_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
     
     try:
         res = requests.get(url, headers=HEADERS, timeout=10)

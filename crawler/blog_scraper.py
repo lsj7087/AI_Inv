@@ -71,7 +71,8 @@ def get_latest_post_ranto28():
                 dt = datetime.strptime(pub_date_raw, "%a, %d %b %Y %H:%M:%S %z")
                 date_str = dt.strftime("%Y-%m-%d %H:%M")
             except Exception:
-                date_str = datetime.now().strftime("%Y-%m-%d %H:%M") # 파싱 실패시 현재 시간
+                from datetime import timedelta
+                date_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M") # 파싱 실패시 현재 시간
                 
             print(f"[{i+1}/20] 블로그 본문 수집 중: {title}")
             full_content = parse_naver_blog_post(link)
