@@ -80,7 +80,9 @@ def main():
 
     # === D. Dashboard 업데이트 ===
     print("[3] Dashboard 상태 업데이트...")
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    from datetime import timedelta
+    now_kst = datetime.utcnow() + timedelta(hours=9)
+    now_str = now_kst.strftime("%Y-%m-%d %H:%M:%S")
     update_dashboard(
         sheet, 
         last_updated=now_str, 
