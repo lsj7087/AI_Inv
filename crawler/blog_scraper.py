@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import xml.etree.ElementTree as ET
+import pytz
+
+KST = pytz.timezone('Asia/Seoul')
 
 def parse_naver_blog_post(url):
     """
@@ -71,8 +74,7 @@ def get_latest_post_ranto28():
                 dt = datetime.strptime(pub_date_raw, "%a, %d %b %Y %H:%M:%S %z")
                 date_str = dt.strftime("%Y-%m-%d %H:%M")
             except Exception:
-                from datetime import timedelta
-                date_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M") # 파싱 실패시 현재 시간
+                date_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M")  # 파싱 실패시 현재 시간
                 
             print(f"[{i+1}/20] 블로그 본문 수집 중: {title}")
             full_content = parse_naver_blog_post(link)
@@ -88,7 +90,7 @@ def get_latest_post_ranto28():
     except Exception as e:
         print(f"[RSS 파싱] 수집 오류: {e}")
         results.append({
-            'date': (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M"),
+            'date': datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
             'source': 'Naver(ranto28)',
             'title': '수집 실패',
             'content': str(e),

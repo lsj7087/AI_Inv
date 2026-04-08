@@ -1,7 +1,9 @@
 import requests
 import yfinance as yf
-from datetime import datetime
-from datetime import timedelta
+import pytz
+from datetime import datetime, timedelta
+
+KST = pytz.timezone('Asia/Seoul')
 
 def get_fear_and_greed():
     """
@@ -134,7 +136,7 @@ def get_market_data():
         '카카오 (KAKAO)': '035720.KS'
     }
     results = []
-    now_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
+    now_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M")
     # 1. CNN Fear & Greed
     score, rating = get_fear_and_greed()
     if score is not None:

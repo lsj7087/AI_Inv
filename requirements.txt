@@ -5,3 +5,4 @@ google-auth
 yfinance
 pandas
 lxml
+pytz

@@ -1,10 +1,13 @@
 import sys
 from datetime import datetime
+import pytz
 
 from crawler.blog_scraper import get_latest_post_ranto28
 from crawler.market_indicator import get_market_data
 from crawler.finance_scraper import get_economic_news
 from uploader.sheets_api import get_google_sheet, insert_multiple_rows_top, update_dashboard, clear_sheet_data
+
+KST = pytz.timezone('Asia/Seoul')
 
 def main():
     print("="*40)
@@ -80,9 +83,7 @@ def main():
 
     # === D. Dashboard 업데이트 ===
     print("[3] Dashboard 상태 업데이트...")
-    from datetime import timedelta
-    now_kst = datetime.utcnow() + timedelta(hours=9)
-    now_str = now_kst.strftime("%Y-%m-%d %H:%M:%S")
+    now_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S")
     update_dashboard(
         sheet, 
         last_updated=now_str, 

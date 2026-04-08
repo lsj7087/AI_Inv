@@ -2,10 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import xml.etree.ElementTree as ET
+import pytz
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
 }
+
+KST = pytz.timezone('Asia/Seoul')
 
 def extract_general_body(url):
     """
@@ -49,8 +52,7 @@ def parse_rss_to_dicts(feed_url, category_name, max_items=20):
     RSS(XML) 피드에서 기사 리스트를 파싱하여 형식화합니다.
     """
     results = []
-    from datetime import timedelta
-    today_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
+    today_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M")
     
     try:
         res = requests.get(feed_url, headers=HEADERS, timeout=10)
@@ -93,8 +95,7 @@ def get_financial_juice():
     정적 페이지 버전이 없으므로 야후 파이낸스 속보로 일부 대체하거나 제한적 파싱 시도.
     """
     results = []
-    from datetime import timedelta
-    today_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
+    today_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M")
     url = "https://www.financialjuice.com/home"
     
     try:
@@ -133,8 +134,7 @@ def get_financial_juice():
 def get_naver_news(max_items=20):
     url = "https://finance.naver.com/news/mainnews.naver"
     results = []
-    from datetime import timedelta
-    today_str = (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M")
+    today_str = datetime.now(KST).strftime("%Y-%m-%d %H:%M")
     
     try:
         res = requests.get(url, headers=HEADERS, timeout=10)
