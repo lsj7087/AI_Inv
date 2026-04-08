@@ -21,6 +21,10 @@ jobs:
       with:
         python-version: "3.10"
 
+    - name: Set Timezone to KST (Asia/Seoul)
+      run: |
+        sudo timedatectl set-timezone Asia/Seoul
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -30,5 +34,6 @@ jobs:
       env:
         GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+        TZ: Asia/Seoul
       run: |
         python main.py
